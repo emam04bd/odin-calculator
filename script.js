@@ -1,6 +1,7 @@
 const operandEl = document.querySelector("#operand");
 const displayEl = document.querySelector("#display");
 const clrBtnEl = document.querySelector("#btn-clr");
+const dltBtnEl = document.querySelector("#btn-dlt");
 
 operandEl.addEventListener("click", (e) => {
 	const char = e.target.textContent;
@@ -20,4 +21,8 @@ operandEl.addEventListener("click", (e) => {
 
 clrBtnEl.addEventListener("click", () => {
 	displayEl.value = "";
+});
+
+dltBtnEl.addEventListener("click", () => {
+	displayEl.value = displayEl.value.slice(0, -1);
 });
