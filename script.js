@@ -6,7 +6,8 @@ const dltBtnEl = document.querySelector("#btn-dlt");
 operandEl.addEventListener("click", (e) => {
 	const char = e.target.textContent;
 	const text = displayEl.value;
-	if (char.length == 1 && text.length <= 20) {
+	console.log(char);
+	if (char.length == 1 && text.length <= 20 && char != "+" && char != "-") {
 		if (char != "." || (char == "." && !text.includes("."))) {
 			displayEl.value = text + char;
 		}
