@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    /* border: 1px solid black; */
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#calc-container {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#label {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+#display {
+    font-size: 20px;
+    text-align: right;
+    display: block;
+    margin: 10px 0px;
+    padding: 10px;
+    width: 310px;
+    border-radius: 5px;
+}
+
+#btn-container {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    margin: 5px 2px;
+}
