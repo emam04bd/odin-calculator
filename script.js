@@ -3,6 +3,7 @@ const operandEl = document.querySelector("#operand-container");
 const clrBtnEl = document.querySelector("#btn-clr");
 const dltBtnEl = document.querySelector("#btn-dlt");
 const eqlBtnEl = document.querySelector("#btn-eql");
+const perBtnEl = document.querySelector("#btn-per");
 const operatorBtnElList = document.querySelectorAll(".operators");
 
 displayEl.value = "0";
@@ -29,9 +30,10 @@ operandEl.addEventListener("click", (e) => {
 	const char = e.target.textContent;
 	if (char == "+/-" || char == "+" || char == "-") {
 		if (isOperatorClicked) {
-			if (isEqualClicked) {
-				clearAll();
-			}
+			clearScreen();
+		}
+		if (isEqualClicked) {
+			clearAll();
 			clearScreen();
 		}
 		if (displayEl.value == "0") {
@@ -46,9 +48,10 @@ operandEl.addEventListener("click", (e) => {
 		!(displayEl.value == "0" && char == "0")
 	) {
 		if (isOperatorClicked) {
-			if (isEqualClicked) {
-				clearAll();
-			}
+			clearScreen();
+		}
+		if (isEqualClicked) {
+			clearAll();
 			clearScreen();
 		}
 		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
@@ -129,5 +132,18 @@ eqlBtnEl.addEventListener("click", () => {
 		displayEl.value = result;
 		num1 = result;
 		isEqualClicked = true;
+	}
+});
+
+perBtnEl.addEventListener("click", () => {
+	if (num1 == null) {
+		displayEl.value = Number(displayEl.value) / 100;
+	} else {
+		console.log(
+			`${num1} X ${(Number(displayEl.value) * num1) / 100}% = ${
+				(Number(displayEl.value) * num1) / 100
+			}`
+		); // ============================================================
+		displayEl.value = (Number(displayEl.value) * num1) / 100;
 	}
 });
