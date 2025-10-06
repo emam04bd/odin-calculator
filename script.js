@@ -2,13 +2,14 @@ const displayEl = document.querySelector("#display");
 const operandEl = document.querySelector("#operand-container");
 const clrBtnEl = document.querySelector("#btn-clr");
 const dltBtnEl = document.querySelector("#btn-dlt");
-const addBtnEl = document.querySelector("#btn-add");
 const eqlBtnEl = document.querySelector("#btn-eql");
+const operatorBtnElList = document.querySelectorAll(".operators");
 
 displayEl.value = "0";
 
 let num1 = null,
 	num2 = null,
+	operator = null,
 	isOperatorClicked = false,
 	isEqualClicked = false;
 
@@ -18,10 +19,9 @@ function clearScreen() {
 }
 
 function clearAll() {
-	displayEl.value = "0";
+	console.log("=============== All Clear ===================="); // =================================================
 	num1 = null;
 	num2 = null;
-	isOperatorClicked = false;
 	isEqualClicked = false;
 }
 
@@ -29,10 +29,10 @@ operandEl.addEventListener("click", (e) => {
 	const char = e.target.textContent;
 	if (char == "+/-" || char == "+" || char == "-") {
 		if (isOperatorClicked) {
+			if (isEqualClicked) {
+				clearAll();
+			}
 			clearScreen();
-		}
-		if (isEqualClicked) {
-			clearAll();
 		}
 		if (displayEl.value == "0") {
 		} else if (displayEl.value[0] != "-") {
@@ -46,10 +46,10 @@ operandEl.addEventListener("click", (e) => {
 		!(displayEl.value == "0" && char == "0")
 	) {
 		if (isOperatorClicked) {
+			if (isEqualClicked) {
+				clearAll();
+			}
 			clearScreen();
-		}
-		if (isEqualClicked) {
-			clearAll();
 		}
 		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
 			displayEl.value =
@@ -62,6 +62,7 @@ operandEl.addEventListener("click", (e) => {
 clrBtnEl.addEventListener("click", () => {
 	if (displayEl.value != "0") {
 		clearScreen();
+		clrBtnEl.textContent = "AC";
 	} else {
 		clearAll();
 	}
@@ -76,24 +77,55 @@ dltBtnEl.addEventListener("click", () => {
 	}
 });
 
-addBtnEl.addEventListener("click", () => {
-	if (num1 == null) {
-		num1 = Number(displayEl.value);
-	} else if (num2 == null && !isOperatorClicked) {
-		num2 = Number(displayEl.value);
-		const result = num1 + num2;
-		displayEl.value = result;
-		num1 = result;
+function calculateResult() {
+	switch (operator) {
+		case "+":
+			console.log(`Operation: ${num1} + ${num2} = ${num1 + num2}`); // ==========================================
+			return num1 + num2;
+		case "-":
+			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
+			return num1 - num2;
+		case "X":
+			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
+			return num1 * num2;
+		case "/":
+			console.log(`Operation: ${num1} / ${num2} = ${num1 / num2}`); // ==========================================
+			return num1 / num2;
+		default:
+			console.log("Wrong operator" + operator);
 	}
-	isOperatorClicked = true;
+}
+
+Array.from(operatorBtnElList).forEach((element) => {
+	element.addEventListener("click", (event) => {
+		if (isEqualClicked) {
+			clearAll();
+		}
+		if (num1 == null) {
+			num1 = Number(displayEl.value);
+			console.log("num1 assigned: " + num1); // =============================================
+		} else if (num2 == null && !isOperatorClicked) {
+			num2 = Number(displayEl.value);
+			console.log("num2 assigned: " + num2); // =============================================
+			const result = calculateResult();
+			displayEl.value = result;
+			num1 = result;
+		}
+		num2 = null;
+		operator = event.target.textContent;
+		console.log("operator assigned: " + operator); // ==============================================
+		isOperatorClicked = true;
+	});
 });
 
 eqlBtnEl.addEventListener("click", () => {
+	console.log("====================EQUALS=================="); // ===========================================================
 	if (num1 != null && num2 == null) {
 		num2 = Number(displayEl.value);
+		console.log("num2 assigned: " + num2); // =============================================
 	}
 	if (num2) {
-		const result = num1 + num2;
+		const result = calculateResult();
 		displayEl.value = result;
 		num1 = result;
 		isEqualClicked = true;
