@@ -14,27 +14,27 @@ let num1 = null,
 	isOperatorClicked = false,
 	isEqualClicked = false;
 
-function clearScreen() {
-	displayEl.value = "0";
-	isOperatorClicked = false;
-}
-
 function clearAll() {
 	console.log("=============== All Clear ===================="); // =================================================
 	num1 = null;
 	num2 = null;
 	isEqualClicked = false;
+	isOperatorClicked = false;
 }
 
 operandEl.addEventListener("click", (e) => {
+	if (displayEl.value == "Undefined") {
+		return;
+	}
 	const char = e.target.textContent;
 	if (char == "+/-" || char == "+" || char == "-") {
 		if (isOperatorClicked) {
-			clearScreen();
+			displayEl.value = "0";
+			isOperatorClicked = false;
 		}
 		if (isEqualClicked) {
 			clearAll();
-			clearScreen();
+			displayEl.value = "0";
 		}
 		if (displayEl.value == "0") {
 		} else if (displayEl.value[0] != "-") {
@@ -48,11 +48,12 @@ operandEl.addEventListener("click", (e) => {
 		!(displayEl.value == "0" && char == "0")
 	) {
 		if (isOperatorClicked) {
-			clearScreen();
+			displayEl.value = "0";
+			isOperatorClicked = false;
 		}
 		if (isEqualClicked) {
 			clearAll();
-			clearScreen();
+			displayEl.value = "0";
 		}
 		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
 			displayEl.value =
@@ -63,15 +64,21 @@ operandEl.addEventListener("click", (e) => {
 });
 
 clrBtnEl.addEventListener("click", () => {
-	if (displayEl.value != "0") {
-		clearScreen();
-		clrBtnEl.textContent = "AC";
-	} else {
+	if (displayEl.value == "Undefined") {
+		displayEl.value = "0";
 		clearAll();
+	} else if (displayEl.value == "0") {
+		clearAll();
+	} else {
+		displayEl.value = "0";
+		clrBtnEl.textContent = "AC";
 	}
 });
 
 dltBtnEl.addEventListener("click", () => {
+	if (displayEl.value == "Undefined") {
+		return;
+	}
 	if (displayEl.value.length == 1) {
 		displayEl.value = "0";
 		clrBtnEl.textContent = "AC";
@@ -101,6 +108,9 @@ function calculateResult() {
 
 Array.from(operatorBtnElList).forEach((element) => {
 	element.addEventListener("click", (event) => {
+		if (displayEl.value == "Undefined") {
+			return;
+		}
 		if (isEqualClicked) {
 			clearAll();
 		}
@@ -108,11 +118,16 @@ Array.from(operatorBtnElList).forEach((element) => {
 			num1 = Number(displayEl.value);
 			console.log("num1 assigned: " + num1); // =============================================
 		} else if (num2 == null && !isOperatorClicked) {
-			num2 = Number(displayEl.value);
-			console.log("num2 assigned: " + num2); // =============================================
-			const result = calculateResult();
-			displayEl.value = result;
-			num1 = result;
+			if (displayEl.value == "0" && operator == "/") {
+				displayEl.value = "Undefined";
+				clrBtnEl.textContent = "AC";
+			} else {
+				num2 = Number(displayEl.value);
+				console.log("num2 assigned: " + num2); // =============================================
+				const result = calculateResult();
+				displayEl.value = result;
+				num1 = result;
+			}
 		}
 		num2 = null;
 		operator = event.target.textContent;
@@ -122,20 +137,31 @@ Array.from(operatorBtnElList).forEach((element) => {
 });
 
 eqlBtnEl.addEventListener("click", () => {
+	if (displayEl.value == "Undefined" || isOperatorClicked) {
+		return;
+	}
 	console.log("====================EQUALS=================="); // ===========================================================
 	if (num1 != null && num2 == null) {
 		num2 = Number(displayEl.value);
 		console.log("num2 assigned: " + num2); // =============================================
 	}
-	if (num2) {
-		const result = calculateResult();
-		displayEl.value = result;
-		num1 = result;
-		isEqualClicked = true;
+	if (num2 != null) {
+		if (num2 == 0 && operator == "/") {
+			displayEl.value = "Undefined";
+			clrBtnEl.textContent = "AC";
+		} else {
+			const result = calculateResult();
+			displayEl.value = result;
+			num1 = result;
+			isEqualClicked = true;
+		}
 	}
 });
 
 perBtnEl.addEventListener("click", () => {
+	if (displayEl.value == "Undefined" || isOperatorClicked) {
+		return;
+	}
 	if (num1 == null) {
 		displayEl.value = Number(displayEl.value) / 100;
 	} else {
