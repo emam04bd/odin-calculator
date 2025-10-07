@@ -33,8 +33,8 @@ operandEl.addEventListener("click", (e) => {
 			isOperatorClicked = false;
 		}
 		if (isEqualClicked) {
-			clearAll();
 			displayEl.value = "0";
+			clearAll();
 		}
 		if (displayEl.value == "0") {
 		} else if (displayEl.value[0] != "-") {
@@ -52,8 +52,8 @@ operandEl.addEventListener("click", (e) => {
 			isOperatorClicked = false;
 		}
 		if (isEqualClicked) {
-			clearAll();
 			displayEl.value = "0";
+			clearAll();
 		}
 		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
 			displayEl.value =
@@ -79,9 +79,10 @@ dltBtnEl.addEventListener("click", () => {
 	if (displayEl.value == "Undefined") {
 		return;
 	}
-	if (displayEl.value.length == 1) {
+	if (displayEl.value.length == 1 || isOperatorClicked) {
 		displayEl.value = "0";
 		clrBtnEl.textContent = "AC";
+		isOperatorClicked = false;
 	} else {
 		displayEl.value = displayEl.value.slice(0, -1);
 	}
