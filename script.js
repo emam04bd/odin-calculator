@@ -22,11 +22,11 @@ function clearAll() {
 	isOperatorClicked = false;
 }
 
-operandEl.addEventListener("click", (e) => {
+operandEl.addEventListener("click", (event) => {
 	if (displayEl.value == "Undefined") {
 		return;
 	}
-	const char = e.target.textContent;
+	const char = event.target.textContent;
 	if (char == "+/-" || char == "+" || char == "-") {
 		if (isOperatorClicked) {
 			displayEl.value = "0";
