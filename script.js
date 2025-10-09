@@ -40,7 +40,6 @@ operandEl.addEventListener("click", (event) => {
 			isOperatorClicked = false;
 		}
 		if (isEqualClicked) {
-			displayEl.value = "0";
 			clearAll();
 		}
 		if (displayEl.value[0] != "-") {
