@@ -63,3 +63,7 @@ button.operators, #btn-per, #btn-eql {
 #btn-container button:hover {
     background-color: #FFFDD0;
 }
+
+#btn-container button:active {
+    background-color: #fff;
+}
