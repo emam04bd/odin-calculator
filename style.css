@@ -44,4 +44,18 @@ button {
     height: 50px;
     width: 50px;
     margin: 5px 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#operand-container button {
+    background-color: #c0e5e5;
+}
+
+button.operators, #btn-per, #btn-eql {
+    background-color: #ee5;
+}
+
+#btn-dlt, #btn-clr {
+    background-color: #d55;
 }
