@@ -14,12 +14,19 @@ let num1 = null,
 	isOperatorClicked = false,
 	isEqualClicked = false;
 
+function resetOperatorBackground() {
+	operatorBtnElList.forEach((element) => {
+		element.style.backgroundColor = "#ee5";
+	});
+}
+
 function clearAll() {
 	console.log("=============== All Clear ===================="); // =================================================
 	num1 = null;
 	num2 = null;
 	isEqualClicked = false;
 	isOperatorClicked = false;
+	resetOperatorBackground();
 }
 
 operandEl.addEventListener("click", (event) => {
@@ -131,7 +138,9 @@ Array.from(operatorBtnElList).forEach((element) => {
 			}
 		}
 		num2 = null;
+		resetOperatorBackground();
 		operator = event.target.textContent;
+		event.target.style.backgroundColor = "#fff";
 		console.log("operator assigned: " + operator); // ==============================================
 		isOperatorClicked = true;
 	});
