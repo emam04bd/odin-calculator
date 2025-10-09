@@ -6,6 +6,7 @@
 
 body {
     min-height: 100vh;
+    background-color: #555;
 
     display: flex;
     align-items: center;
@@ -14,7 +15,7 @@ body {
 
 #calc-container {
     padding: 10px;
-    border: 2px solid black;
+    border: 2px solid #000;
     border-radius: 10px;
 }
 
@@ -44,7 +45,7 @@ button {
     height: 50px;
     width: 50px;
     margin: 5px 2px;
-    border: 1px solid black;
+    border: 1px solid #000;
     border-radius: 5px;
 }
 
@@ -61,7 +62,7 @@ button.operators, #btn-per, #btn-eql {
 }
 
 #btn-container button:hover {
-    background-color: #FFFDD0;
+    background-color: #fffdd0;
 }
 
 #btn-container button:active {
