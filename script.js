@@ -43,8 +43,7 @@ operandEl.addEventListener("click", (event) => {
 			displayEl.value = "0";
 			clearAll();
 		}
-		if (displayEl.value == "0") {
-		} else if (displayEl.value[0] != "-") {
+		if (displayEl.value[0] != "-") {
 			displayEl.value = "-" + displayEl.value;
 		} else {
 			displayEl.value = displayEl.value.slice(1);
@@ -63,8 +62,13 @@ operandEl.addEventListener("click", (event) => {
 			clearAll();
 		}
 		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
-			displayEl.value =
-				(displayEl.value == "0" ? "" : displayEl.value) + char;
+			if (displayEl.value == "0") {
+				displayEl.value = char;
+			} else if (displayEl.value == "-0") {
+				displayEl.value = "-" + char;
+			} else {
+				displayEl.value = displayEl.value + char;
+			}
 			clrBtnEl.textContent = "C";
 		}
 	}
@@ -86,10 +90,16 @@ dltBtnEl.addEventListener("click", () => {
 	if (displayEl.value == "Undefined") {
 		return;
 	}
-	if (displayEl.value.length == 1 || isOperatorClicked) {
+	if (
+		displayEl.value == "-0" ||
+		displayEl.value.length == 1 ||
+		isOperatorClicked
+	) {
 		displayEl.value = "0";
 		clrBtnEl.textContent = "AC";
 		isOperatorClicked = false;
+	} else if (displayEl.value.length == 2 && displayEl.value[0] == "-") {
+		displayEl.value = "-0";
 	} else {
 		displayEl.value = displayEl.value.slice(0, -1);
 	}
@@ -126,8 +136,12 @@ Array.from(operatorBtnElList).forEach((element) => {
 			num1 = Number(displayEl.value);
 			console.log("num1 assigned: " + num1); // =============================================
 		} else if (num2 == null && !isOperatorClicked) {
-			if (displayEl.value == "0" && operator == "/") {
+			if (
+				(displayEl.value == "0" || displayEl.value == "-0") &&
+				operator == "/"
+			) {
 				displayEl.value = "Undefined";
+				resetOperatorBackground();
 				clrBtnEl.textContent = "AC";
 			} else {
 				num2 = Number(displayEl.value);
@@ -158,6 +172,7 @@ eqlBtnEl.addEventListener("click", () => {
 	if (num2 != null) {
 		if (num2 == 0 && operator == "/") {
 			displayEl.value = "Undefined";
+			resetOperatorBackground();
 			clrBtnEl.textContent = "AC";
 		} else {
 			const result = calculateResult();
