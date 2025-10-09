@@ -59,3 +59,7 @@ button.operators, #btn-per, #btn-eql {
 #btn-dlt, #btn-clr {
     background-color: #d55;
 }
+
+#btn-container button:hover {
+    background-color: #FFFDD0;
+}
