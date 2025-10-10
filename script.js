@@ -6,8 +6,6 @@ const eqlBtnEl = document.querySelector("#btn-eql");
 const perBtnEl = document.querySelector("#btn-per");
 const operatorBtnElList = document.querySelectorAll(".operators");
 
-displayEl.value = "0";
-
 let num1 = null,
 	num2 = null,
 	operator = null,
