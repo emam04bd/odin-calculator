@@ -60,7 +60,12 @@ operandEl.addEventListener("click", (event) => {
 			displayEl.value = "0";
 			clearAll();
 		}
-		if (char != "." || (char == "." && !displayEl.value.includes("."))) {
+
+		if (char == ".") {
+			if (!displayEl.value.includes(".")) {
+				displayEl.value = displayEl.value + char;
+			}
+		} else {
 			if (displayEl.value == "0") {
 				displayEl.value = char;
 			} else if (displayEl.value == "-0") {
