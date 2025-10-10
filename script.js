@@ -14,10 +14,11 @@ let num1 = null,
 	isOperatorClicked = false,
 	isEqualClicked = false;
 
-function resetOperatorBackground() {
+function resetOperator() {
 	operatorBtnElList.forEach((element) => {
 		element.style.backgroundColor = "#ee5";
 	});
+	isOperatorClicked = false;
 }
 
 function clearAll() {
@@ -25,8 +26,7 @@ function clearAll() {
 	num1 = null;
 	num2 = null;
 	isEqualClicked = false;
-	isOperatorClicked = false;
-	resetOperatorBackground();
+	resetOperator();
 }
 
 operandEl.addEventListener("click", (event) => {
@@ -37,7 +37,7 @@ operandEl.addEventListener("click", (event) => {
 	if (char == "+/-" || char == "+" || char == "-") {
 		if (isOperatorClicked) {
 			displayEl.value = "0";
-			isOperatorClicked = false;
+			resetOperator();
 		}
 		if (isEqualClicked) {
 			clearAll();
@@ -54,7 +54,7 @@ operandEl.addEventListener("click", (event) => {
 	) {
 		if (isOperatorClicked) {
 			displayEl.value = "0";
-			isOperatorClicked = false;
+			resetOperator();
 		}
 		if (isEqualClicked) {
 			displayEl.value = "0";
@@ -96,7 +96,7 @@ dltBtnEl.addEventListener("click", () => {
 	) {
 		displayEl.value = "0";
 		clrBtnEl.textContent = "AC";
-		isOperatorClicked = false;
+		resetOperator();
 	} else if (displayEl.value.length == 2 && displayEl.value[0] == "-") {
 		displayEl.value = "-0";
 	} else {
@@ -140,7 +140,7 @@ Array.from(operatorBtnElList).forEach((element) => {
 				operator == "/"
 			) {
 				displayEl.value = "Undefined";
-				resetOperatorBackground();
+				resetOperator();
 				clrBtnEl.textContent = "AC";
 			} else {
 				num2 = Number(displayEl.value);
@@ -151,7 +151,7 @@ Array.from(operatorBtnElList).forEach((element) => {
 			}
 		}
 		num2 = null;
-		resetOperatorBackground();
+		resetOperator();
 		operator = event.target.textContent;
 		event.target.style.backgroundColor = "#fff";
 		console.log("operator assigned: " + operator); // ==============================================
@@ -171,7 +171,7 @@ eqlBtnEl.addEventListener("click", () => {
 	if (num2 != null) {
 		if (num2 == 0 && operator == "/") {
 			displayEl.value = "Undefined";
-			resetOperatorBackground();
+			resetOperator();
 			clrBtnEl.textContent = "AC";
 		} else {
 			const result = calculateResult();
