@@ -29,48 +29,52 @@ function clearAll() {
 
 operandEl.addEventListener("click", (event) => {
 	if (displayEl.value == "Undefined") {
-		return;
-	}
-	const char = event.target.textContent;
-	if (char == "+/-" || char == "+" || char == "-") {
-		if (isOperatorClicked) {
-			displayEl.value = "0";
-			resetOperator();
-		}
-		if (isEqualClicked) {
-			clearAll();
-		}
-		if (displayEl.value[0] != "-") {
-			displayEl.value = "-" + displayEl.value;
-		} else {
-			displayEl.value = displayEl.value.slice(1);
-		}
-	} else if (
-		char.length == 1 &&
-		displayEl.value.length <= 20 &&
-		!(displayEl.value == "0" && char == "0")
-	) {
-		if (isOperatorClicked) {
-			displayEl.value = "0";
-			resetOperator();
-		}
-		if (isEqualClicked) {
-			displayEl.value = "0";
-			clearAll();
-		}
-
-		if (char == ".") {
-			if (!displayEl.value.includes(".")) {
-				displayEl.value = displayEl.value + char;
+	} else {
+		const char = event.target.textContent;
+		if (char == "+/-" || char == "+" || char == "-") {
+			if (isOperatorClicked) {
+				displayEl.value = "0";
+				resetOperator();
 			}
-		} else {
-			if (displayEl.value == "0") {
-				displayEl.value = char;
-			} else if (displayEl.value == "-0") {
-				displayEl.value = "-" + char;
+			if (isEqualClicked) {
+				clearAll();
+			}
+			if (displayEl.value[0] != "-") {
+				displayEl.value = "-" + displayEl.value;
 			} else {
-				displayEl.value = displayEl.value + char;
+				displayEl.value = displayEl.value.slice(1);
 			}
+		} else if (
+			char.length == 1 &&
+			displayEl.value.length <= 20 &&
+			!(displayEl.value == "0" && char == "0")
+		) {
+			if (isOperatorClicked) {
+				displayEl.value = "0";
+				resetOperator();
+			}
+			if (isEqualClicked) {
+				displayEl.value = "0";
+				clearAll();
+			}
+
+			if (char == ".") {
+				if (!displayEl.value.includes(".")) {
+					displayEl.value = displayEl.value + char;
+				}
+			} else {
+				if (displayEl.value == "0") {
+					displayEl.value = char;
+				} else if (displayEl.value == "-0") {
+					displayEl.value = "-" + char;
+				} else {
+					displayEl.value = displayEl.value + char;
+				}
+			}
+		}
+		if (displayEl.value == "0") {
+			clrBtnEl.textContent = "AC";
+		} else {
 			clrBtnEl.textContent = "C";
 		}
 	}
@@ -94,6 +98,7 @@ dltBtnEl.addEventListener("click", () => {
 	}
 	if (
 		displayEl.value == "-0" ||
+		displayEl.value == "0." ||
 		displayEl.value.length == 1 ||
 		isOperatorClicked
 	) {
