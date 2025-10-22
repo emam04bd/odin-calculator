@@ -36,6 +36,7 @@ function calculateResult() {
 			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
 			return num1 - num2;
 		case "X":
+		case "*":
 			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
 			return num1 * num2;
 		case "/":
@@ -46,10 +47,9 @@ function calculateResult() {
 	}
 }
 
-function responseToOperandClick(event) {
+function displayNumber(char) {
 	if (displayEl.value == "Undefined") {
 	} else {
-		const char = event.target.textContent;
 		if (char == "+/-" || char == "+" || char == "-") {
 			if (isOperatorClicked) {
 				displayEl.value = "0";
@@ -99,6 +99,11 @@ function responseToOperandClick(event) {
 	}
 }
 
+function responseToOperandClick(event) {
+	const char = event.target.textContent;
+	displayNumber(char);
+}
+
 function responseToClrClick() {
 	if (displayEl.value == "Undefined") {
 		displayEl.value = "0";
@@ -131,7 +136,7 @@ function responseToDltClick() {
 	}
 }
 
-function responseToOperatorsClick(event) {
+function operate(newOperator) {
 	if (displayEl.value == "Undefined") {
 		return;
 	}
@@ -159,10 +164,14 @@ function responseToOperatorsClick(event) {
 	}
 	num2 = null;
 	resetOperator();
-	operator = event.target.textContent;
-	event.target.style.backgroundColor = "#fff";
+	operator = newOperator;
+	// event.target.style.backgroundColor = "#fff"; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	console.log("operator assigned: " + operator); // ==============================================
 	isOperatorClicked = true;
+}
+
+function responseToOperatorsClick(event) {
+	operate(event.target.textContent);
 }
 
 function responseToEqlClick() {
@@ -204,6 +213,23 @@ function responseToPerClick() {
 	}
 }
 
+function responseToKeyboardClick(event) {
+	let key = event.key;
+	if (("0" <= key && key <= "9") || key == ".") {
+		displayNumber(key);
+	} else if (key == "Backspace") {
+		responseToDltClick();
+	} else if (key == "c" || key == "C") {
+		responseToClrClick();
+	} else if ("+-*/".includes(key)) {
+		operate(key);
+	} else if (key == "=" || key == "Enter") {
+		responseToEqlClick();
+	} else if (key == "%") {
+		responseToPerClick();
+	}
+}
+
 dltBtnEl.addEventListener("click", responseToDltClick);
 clrBtnEl.addEventListener("click", responseToClrClick);
 operandEl.addEventListener("click", responseToOperandClick);
@@ -212,3 +238,4 @@ Array.from(operatorBtnElList).forEach((element) => {
 });
 eqlBtnEl.addEventListener("click", responseToEqlClick);
 perBtnEl.addEventListener("click", responseToPerClick);
+document.addEventListener("keydown", responseToKeyboardClick);
