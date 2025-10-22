@@ -27,7 +27,7 @@ function clearAll() {
 	resetOperator();
 }
 
-operandEl.addEventListener("click", (event) => {
+function responseToOperandClick(event) {
 	if (displayEl.value == "Undefined") {
 	} else {
 		const char = event.target.textContent;
@@ -78,7 +78,7 @@ operandEl.addEventListener("click", (event) => {
 			clrBtnEl.textContent = "C";
 		}
 	}
-});
+}
 
 clrBtnEl.addEventListener("click", () => {
 	if (displayEl.value == "Undefined") {
@@ -204,6 +204,7 @@ function responseToPerClick() {
 	}
 }
 
+operandEl.addEventListener("click", responseToOperandClick);
 Array.from(operatorBtnElList).forEach((element) => {
 	element.addEventListener("click", responseToOperatorsClick);
 });
