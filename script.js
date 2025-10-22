@@ -27,6 +27,25 @@ function clearAll() {
 	resetOperator();
 }
 
+function calculateResult() {
+	switch (operator) {
+		case "+":
+			console.log(`Operation: ${num1} + ${num2} = ${num1 + num2}`); // ==========================================
+			return num1 + num2;
+		case "-":
+			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
+			return num1 - num2;
+		case "X":
+			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
+			return num1 * num2;
+		case "/":
+			console.log(`Operation: ${num1} / ${num2} = ${num1 / num2}`); // ==========================================
+			return num1 / num2;
+		default:
+			console.log("Wrong operator" + operator);
+	}
+}
+
 function responseToOperandClick(event) {
 	if (displayEl.value == "Undefined") {
 	} else {
@@ -80,7 +99,7 @@ function responseToOperandClick(event) {
 	}
 }
 
-clrBtnEl.addEventListener("click", () => {
+function responseToClrClick() {
 	if (displayEl.value == "Undefined") {
 		displayEl.value = "0";
 		clearAll();
@@ -90,9 +109,9 @@ clrBtnEl.addEventListener("click", () => {
 		displayEl.value = "0";
 		clrBtnEl.textContent = "AC";
 	}
-});
+}
 
-dltBtnEl.addEventListener("click", () => {
+function responseToDltClick() {
 	if (displayEl.value == "Undefined") {
 		return;
 	}
@@ -109,25 +128,6 @@ dltBtnEl.addEventListener("click", () => {
 		displayEl.value = "-0";
 	} else {
 		displayEl.value = displayEl.value.slice(0, -1);
-	}
-});
-
-function calculateResult() {
-	switch (operator) {
-		case "+":
-			console.log(`Operation: ${num1} + ${num2} = ${num1 + num2}`); // ==========================================
-			return num1 + num2;
-		case "-":
-			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
-			return num1 - num2;
-		case "X":
-			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
-			return num1 * num2;
-		case "/":
-			console.log(`Operation: ${num1} / ${num2} = ${num1 / num2}`); // ==========================================
-			return num1 / num2;
-		default:
-			console.log("Wrong operator" + operator);
 	}
 }
 
@@ -204,6 +204,8 @@ function responseToPerClick() {
 	}
 }
 
+dltBtnEl.addEventListener("click", responseToDltClick);
+clrBtnEl.addEventListener("click", responseToClrClick);
 operandEl.addEventListener("click", responseToOperandClick);
 Array.from(operatorBtnElList).forEach((element) => {
 	element.addEventListener("click", responseToOperatorsClick);
