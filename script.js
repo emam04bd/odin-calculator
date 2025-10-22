@@ -169,7 +169,7 @@ Array.from(operatorBtnElList).forEach((element) => {
 	element.addEventListener("click", responseToOperatorsClick);
 });
 
-eqlBtnEl.addEventListener("click", () => {
+function responseToEqlClick() {
 	if (displayEl.value == "Undefined" || isOperatorClicked) {
 		return;
 	}
@@ -190,7 +190,9 @@ eqlBtnEl.addEventListener("click", () => {
 			isEqualClicked = true;
 		}
 	}
-});
+}
+
+eqlBtnEl.addEventListener("click", responseToEqlClick);
 
 perBtnEl.addEventListener("click", () => {
 	if (displayEl.value == "Undefined" || isOperatorClicked) {
