@@ -165,10 +165,6 @@ function responseToOperatorsClick(event) {
 	isOperatorClicked = true;
 }
 
-Array.from(operatorBtnElList).forEach((element) => {
-	element.addEventListener("click", responseToOperatorsClick);
-});
-
 function responseToEqlClick() {
 	if (displayEl.value == "Undefined" || isOperatorClicked) {
 		return;
@@ -192,9 +188,7 @@ function responseToEqlClick() {
 	}
 }
 
-eqlBtnEl.addEventListener("click", responseToEqlClick);
-
-perBtnEl.addEventListener("click", () => {
+function responseToPerClick() {
 	if (displayEl.value == "Undefined" || isOperatorClicked) {
 		return;
 	}
@@ -208,4 +202,10 @@ perBtnEl.addEventListener("click", () => {
 		); // ============================================================
 		displayEl.value = (Number(displayEl.value) * num1) / 100;
 	}
+}
+
+Array.from(operatorBtnElList).forEach((element) => {
+	element.addEventListener("click", responseToOperatorsClick);
 });
+eqlBtnEl.addEventListener("click", responseToEqlClick);
+perBtnEl.addEventListener("click", responseToPerClick);
