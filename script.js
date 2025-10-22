@@ -131,40 +131,42 @@ function calculateResult() {
 	}
 }
 
+function responseToOperatorsClick(event) {
+	if (displayEl.value == "Undefined") {
+		return;
+	}
+	if (isEqualClicked) {
+		clearAll();
+	}
+	if (num1 == null) {
+		num1 = Number(displayEl.value);
+		console.log("num1 assigned: " + num1); // =============================================
+	} else if (num2 == null && !isOperatorClicked) {
+		if (
+			(displayEl.value == "0" || displayEl.value == "-0") &&
+			operator == "/"
+		) {
+			displayEl.value = "Undefined";
+			resetOperator();
+			clrBtnEl.textContent = "AC";
+		} else {
+			num2 = Number(displayEl.value);
+			console.log("num2 assigned: " + num2); // =============================================
+			const result = calculateResult();
+			displayEl.value = result;
+			num1 = result;
+		}
+	}
+	num2 = null;
+	resetOperator();
+	operator = event.target.textContent;
+	event.target.style.backgroundColor = "#fff";
+	console.log("operator assigned: " + operator); // ==============================================
+	isOperatorClicked = true;
+}
+
 Array.from(operatorBtnElList).forEach((element) => {
-	element.addEventListener("click", (event) => {
-		if (displayEl.value == "Undefined") {
-			return;
-		}
-		if (isEqualClicked) {
-			clearAll();
-		}
-		if (num1 == null) {
-			num1 = Number(displayEl.value);
-			console.log("num1 assigned: " + num1); // =============================================
-		} else if (num2 == null && !isOperatorClicked) {
-			if (
-				(displayEl.value == "0" || displayEl.value == "-0") &&
-				operator == "/"
-			) {
-				displayEl.value = "Undefined";
-				resetOperator();
-				clrBtnEl.textContent = "AC";
-			} else {
-				num2 = Number(displayEl.value);
-				console.log("num2 assigned: " + num2); // =============================================
-				const result = calculateResult();
-				displayEl.value = result;
-				num1 = result;
-			}
-		}
-		num2 = null;
-		resetOperator();
-		operator = event.target.textContent;
-		event.target.style.backgroundColor = "#fff";
-		console.log("operator assigned: " + operator); // ==============================================
-		isOperatorClicked = true;
-	});
+	element.addEventListener("click", responseToOperatorsClick);
 });
 
 eqlBtnEl.addEventListener("click", () => {
