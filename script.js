@@ -27,22 +27,35 @@ function clearAll() {
 	resetOperator();
 }
 
-function calculateResult() {
-	switch (operator) {
-		case "+":
-			console.log(`Operation: ${num1} + ${num2} = ${num1 + num2}`); // ==========================================
-			return num1 + num2;
-		case "-":
-			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
-			return num1 - num2;
-		case "X":
-			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
-			return num1 * num2;
-		case "/":
-			console.log(`Operation: ${num1} / ${num2} = ${num1 / num2}`); // ==========================================
-			return num1 / num2;
-		default:
-			console.log("Wrong operator" + operator);
+function responseToDltClick() {
+	if (displayEl.value == "Undefined") {
+		return;
+	}
+	if (
+		displayEl.value == "-0" ||
+		displayEl.value == "0." ||
+		displayEl.value.length == 1 ||
+		isOperatorClicked
+	) {
+		displayEl.value = "0";
+		clrBtnEl.textContent = "AC";
+		resetOperator();
+	} else if (displayEl.value.length == 2 && displayEl.value[0] == "-") {
+		displayEl.value = "-0";
+	} else {
+		displayEl.value = displayEl.value.slice(0, -1);
+	}
+}
+
+function responseToClrClick() {
+	if (displayEl.value == "Undefined") {
+		displayEl.value = "0";
+		clearAll();
+	} else if (displayEl.value == "0") {
+		clearAll();
+	} else {
+		displayEl.value = "0";
+		clrBtnEl.textContent = "AC";
 	}
 }
 
@@ -103,35 +116,22 @@ function responseToOperandClick(event) {
 	displayNumber(char);
 }
 
-function responseToClrClick() {
-	if (displayEl.value == "Undefined") {
-		displayEl.value = "0";
-		clearAll();
-	} else if (displayEl.value == "0") {
-		clearAll();
-	} else {
-		displayEl.value = "0";
-		clrBtnEl.textContent = "AC";
-	}
-}
-
-function responseToDltClick() {
-	if (displayEl.value == "Undefined") {
-		return;
-	}
-	if (
-		displayEl.value == "-0" ||
-		displayEl.value == "0." ||
-		displayEl.value.length == 1 ||
-		isOperatorClicked
-	) {
-		displayEl.value = "0";
-		clrBtnEl.textContent = "AC";
-		resetOperator();
-	} else if (displayEl.value.length == 2 && displayEl.value[0] == "-") {
-		displayEl.value = "-0";
-	} else {
-		displayEl.value = displayEl.value.slice(0, -1);
+function calculateResult() {
+	switch (operator) {
+		case "+":
+			console.log(`Operation: ${num1} + ${num2} = ${num1 + num2}`); // ==========================================
+			return num1 + num2;
+		case "-":
+			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
+			return num1 - num2;
+		case "X":
+			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
+			return num1 * num2;
+		case "/":
+			console.log(`Operation: ${num1} / ${num2} = ${num1 / num2}`); // ==========================================
+			return num1 / num2;
+		default:
+			console.log("Wrong operator" + operator);
 	}
 }
 
@@ -164,7 +164,6 @@ function operate(newOperator) {
 	num2 = null;
 	resetOperator();
 	operator = newOperator;
-	// event.target.style.backgroundColor = "#fff"; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	operatorBtnElList.forEach((element) => {
 		if (element.textContent == operator) {
 			element.classList.toggle("change-background");
