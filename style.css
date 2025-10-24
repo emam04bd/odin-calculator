@@ -59,6 +59,10 @@ button.operators, #btn-per, #btn-eql {
     background-color: #ee5;
 }
 
+button.change-background {
+    background-color: #fff;
+}
+
 #btn-dlt, #btn-clr {
     background-color: #d55;
 }

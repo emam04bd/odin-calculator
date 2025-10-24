@@ -14,7 +14,7 @@ let num1 = null,
 
 function resetOperator() {
 	operatorBtnElList.forEach((element) => {
-		element.style.backgroundColor = "#ee5";
+		element.classList.remove("change-background");
 	});
 	isOperatorClicked = false;
 }
@@ -36,7 +36,6 @@ function calculateResult() {
 			console.log(`Operation: ${num1} - ${num2} = ${num1 - num2}`); // ==========================================
 			return num1 - num2;
 		case "X":
-		case "*":
 			console.log(`Operation: ${num1} * ${num2} = ${num1 * num2}`); // ==========================================
 			return num1 * num2;
 		case "/":
@@ -166,6 +165,11 @@ function operate(newOperator) {
 	resetOperator();
 	operator = newOperator;
 	// event.target.style.backgroundColor = "#fff"; $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	operatorBtnElList.forEach((element) => {
+		if (element.textContent == operator) {
+			element.classList.toggle("change-background");
+		}
+	});
 	console.log("operator assigned: " + operator); // ==============================================
 	isOperatorClicked = true;
 }
@@ -222,6 +226,9 @@ function responseToKeyboardClick(event) {
 	} else if (key == "c" || key == "C") {
 		responseToClrClick();
 	} else if ("+-*/".includes(key)) {
+		if (key == "*") {
+			key = "X";
+		}
 		operate(key);
 	} else if (key == "=" || key == "Enter") {
 		responseToEqlClick();
@@ -233,7 +240,7 @@ function responseToKeyboardClick(event) {
 dltBtnEl.addEventListener("click", responseToDltClick);
 clrBtnEl.addEventListener("click", responseToClrClick);
 operandEl.addEventListener("click", responseToOperandClick);
-Array.from(operatorBtnElList).forEach((element) => {
+operatorBtnElList.forEach((element) => {
 	element.addEventListener("click", responseToOperatorsClick);
 });
 eqlBtnEl.addEventListener("click", responseToEqlClick);
